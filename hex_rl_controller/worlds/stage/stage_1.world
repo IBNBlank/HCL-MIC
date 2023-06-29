@@ -1,0 +1,121 @@
+interval_sim 100
+resolution 0.02
+
+
+define sicklaser ranger
+(
+  sensor(
+    pose [ 0 0 0.1 0 ]
+    fov 270
+    range [ 0.0 9.0 ]
+    samples 1024
+  )
+  color "random"
+  size [0.5 0.5 0.21]
+  block(
+    points 4
+    point[0] [0 0]
+    point[1] [0 1]
+    point[2] [1 1]
+    point[3] [1 0]
+    z [0 0.21]
+  )
+)
+
+
+define floorplan model
+(
+  color "gray30"
+  boundary 1
+
+  gui_nose 0
+  gui_grid 0
+  gui_move 1
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+  ranger_return 1
+  obstacle_return 1
+)
+
+
+floorplan
+(
+  name "blank"
+  size [32.000 32.000 0.800]
+  pose [0.000 0.000 0.000 0.000]
+  bitmap "stage_1.png"
+)
+
+
+window
+(
+  size [1550 1550]
+  
+  # Camera options
+  scale 35
+  center [0  0]
+  rotate [ 0.000  0.000 ]
+
+  # GUI options
+  show_data 1
+  show_flags 1
+  show_blocks 1
+  show_clock 1
+  show_footprints 1
+  show_grid 1
+  show_trailarrows 0
+  show_trailrise 0
+  show_trailfast 0
+  show_occupancy 0
+)
+
+
+define agent position
+(
+  # actual size
+  size [0.65 0.66 0.20]   # sizes from MobileRobots' web site
+
+  localization "gps"
+  # the pioneer's center of rotation is offset from its center of area
+  origin [0 0 0 0]
+
+  # draw a nose on the robot so we can see which way it points
+  gui_nose 1
+
+  color "random"
+  drive "diff"            # Differential steering model.
+  obstacle_return 1       # Can hit things.
+  ranger_return 0.5       # reflects sonar beams
+  blob_return 1           # Seen by blobfinders  
+  fiducial_return 1       # Seen as "1" fiducial finders
+  sicklaser(
+    pose [ 0 0 0 0 ]
+  )
+  
+  # [ xmin xmax ymin ymax zmin zmax amin amax ]                
+  # velocity_bounds [-0.5 0.5 0 0 0 0 -90.0 90.0 ]                    
+  acceleration_bounds [-1.5 1.5 0 0 0 0 -90.0 90.0 ]
+)
+
+### agent ###
+# scenario 0
+agent( pose [14.0          8.0          0.00 180.00])
+agent( pose [12.242640687  12.242640687 0.00 225.00])
+agent( pose [8.0           14.0         0.00 270.00])
+agent( pose [3.757359313   12.242640687 0.00 315.00])
+# scenario 1
+agent( pose [-8.0          14.0         0.00 270.00])
+agent( pose [-12.242640687 12.242640687 0.00 315.00])
+agent( pose [-14.0         8.0          0.00 360.00])
+agent( pose [-12.242640687 3.757359313  0.00 405.00])
+# scenario 2
+agent( pose [-14.0         -8.0          0.00 360.00])
+agent( pose [-12.242640687 -12.242640687 0.00 405.00])
+agent( pose [-8.0          -14.0         0.00 450.00])
+agent( pose [-3.757359313  -12.242640687 0.00 495.00])
+# scenario 3
+agent( pose [14.0         -8.0          0.00 180.00])
+agent( pose [12.242640687 -3.757359313  0.00 225.00])
+agent( pose [8.0          -14.0         0.00 450.00])
+agent( pose [12.242640687 -12.242640687 0.00 495.00])

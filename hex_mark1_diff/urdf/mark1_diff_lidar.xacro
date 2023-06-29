@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="mark1_diff" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="prefix" value="$(arg prefix)" />
+
+    <xacro:if value="${prefix == '/' or prefix == '' or prefix == ' '}">
+        <xacro:property name="tf_prefix" value="" />
+    </xacro:if>
+
+    <xacro:unless value="${prefix == '/' or prefix == '' or prefix == ' '}">
+        <xacro:property name="tf_prefix" value="${prefix}/" />
+    </xacro:unless>
+    
+    <xacro:property name="lidar_offset_x" value="0.0" />
+    <xacro:property name="lidar_offset_y" value="0.0" />
+    <xacro:property name="lidar_offset_z" value="0.30" />
+
+    <xacro:include filename="$(find hex_mark1_diff)/urdf/urdf_mark1_diff.xacro" />
+    <xacro:include filename="$(find hex_mark1_diff)/urdf/hex_lidar.xacro" />   
+
+    <!-- Lidar -->
+    <joint name="${tf_prefix}lidar_joint" type="fixed">
+        <origin xyz="${lidar_offset_x} ${lidar_offset_y} ${lidar_offset_z}" rpy="0 0 0" />
+        <parent link="${tf_prefix}base_link"/>
+        <child link="${tf_prefix}laser_link"/>
+    </joint>
+    <xacro:xpkg_lidar prefix="laser" tf_prefix="${tf_prefix}"/>
+
+    <!-- Chasis -->
+    <urdf_mark1_diff/>
+
+</robot>

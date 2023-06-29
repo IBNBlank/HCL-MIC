@@ -1,0 +1,11 @@
+<launch>
+    <!-- map server -->
+    <arg name="map_file_path" default="$(find hex_rl_controller)/rviz/map.yaml" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file_path)"/>
+
+    <!-- tf -->
+    <node pkg="tf" type="static_transform_publisher" name="map_static_tf" args="-10.5 0 0 0 0 0 odom map 1000" />
+
+    <!-- rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hex_rl_controller)/rviz/gazebo_test.rviz" />
+</launch>

@@ -1,0 +1,13 @@
+<launch>
+    <arg name="visual" default="false"/>
+    <param name="/use_sim_time" value="true"/>
+
+    <group if="$(arg visual)">
+        <node name="hex_stage_ros" type="hex_stage_ros" pkg="hex_stage_ros" 
+              args="$(find hex_rl_controller)/worlds/stage/stage_0.world" />
+    </group>
+    <group unless="$(arg visual)">
+        <node name="hex_stage_ros" type="hex_stage_ros" pkg="hex_stage_ros" 
+              args="-g $(find hex_rl_controller)/worlds/stage/stage_0.world" />
+    </group>
+</launch>

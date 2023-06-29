@@ -1,0 +1,4 @@
+<launch>
+    <node name="real_test" type="python_real_test.py"
+          pkg="hex_rl_controller" output="screen" />
+</launch>
