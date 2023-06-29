@@ -53,13 +53,19 @@ rosrun hex_rl_controller bash_stage_2.sh
 
 ## How to test
 
+* Test in Stage
+    ```
+    roslaunch hex_rl_controller stage_test.launch
+    rosrun hex_rl_controller bash_stage_test.sh
+    ```
+
 * Test in Gazebo
     ```
     roslaunch hex_rl_controller stage_gazebo.launch
     rosrun hex_rl_controller bash_gazebo_test.sh
     ```
 
-* Test in Real-world
+* Test in real-world
     * Run in the vehicle
         ```
         roslaunch hex_rl_controller bringup_rl_vehicle.launch
